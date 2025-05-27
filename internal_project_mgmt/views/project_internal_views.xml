@@ -1,0 +1,90 @@
+<odoo>
+
+  <record id="view_project_internal_form" model="ir.ui.view">
+    <field name="name">project.internal.form</field>
+    <field name="model">project.internal</field>
+    <field name="arch" type="xml">
+      <form string="Internal Project">
+        <header>
+          <button string="Start" type="object" name="action_start" 
+                  states="draft" class="btn-primary"/>
+          <button string="Complete" type="object" name="action_complete" 
+                  states="in_progress" class="btn-success"/>
+          <button string="Cancel" type="object" name="action_cancel" 
+                  states="draft,in_progress" class="btn-danger"/>
+          <button string="Reset to Draft" type="object" name="action_reset_draft" 
+                  states="cancelled,done" class="btn-secondary"/>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+              <button name="action_view_tasks" attrs="{'invisible': [('task_count', '=', 0)]}" type="object" class="oe_stat_button" icon="fa-tasks" >
+                  <field name="task_count" widget="statinfo" string="Tasks"/>
+              </button>
+          </div>
+          <group>
+            <field name="name"/>
+            <field name="manager_id"/>
+            <field name="department_id" readonly="1"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="state" readonly="1"/>
+            <field name="progress" readonly="1"/>
+            <field name="task_count" readonly="1" widget="statinfo"/>
+          </group>
+          <group>
+            <field name="description"/>
+          </group>
+          <notebook>
+            <page string="Tasks">
+              <field name="task_ids">
+                <tree editable="bottom">
+                  <field name="name"/>
+                  <field name="assigned_to"/>
+                  <field name="due_date"/>
+                  <field name="state"/>
+                  <field name="priority"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_project_internal_tree" model="ir.ui.view">
+    <field name="name">project.internal.tree</field>
+    <field name="model">project.internal</field>
+    <field name="arch" type="xml">
+      <tree string="Internal Projects">
+        <field name="name"/>
+        <field name="manager_id"/>
+        <field name="department_id"/>
+        <field name="start_date"/>
+        <field name="end_date"/>
+        <field name="state"/>
+        <field name="progress"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="action_project_internal" model="ir.actions.act_window">
+    <field name="name">Internal Projects</field>
+    <field name="res_model">project.internal</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!-- Menus -->
+  <menuitem id="menu_internal_project_root"
+            name="Internal Project"
+            parent="project.menu_main_pm"
+            action="action_project_internal"
+            sequence="20"/>
+
+  <menuitem id="menu_internal_project"
+            name="Internal Project"
+            parent="menu_internal_project_root"
+            action="action_project_internal"
+            sequence="20"/>
+
+</odoo>

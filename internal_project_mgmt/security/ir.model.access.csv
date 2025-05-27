@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_internal_user,access.project.internal.user,model_project_internal,,1,0,0,0
+access_project_internal_manager,access.project.internal.manager,model_project_internal,internal_project_mgmt.group_internal_project_manager,1,1,1,1
+access_project_task_internal_user,access.project.task.internal.user,model_project_task_internal,,1,0,0,0
+access_project_task_internal_manager,access.project.task.internal.manager,model_project_task_internal,internal_project_mgmt.group_internal_project_manager,1,1,1,1

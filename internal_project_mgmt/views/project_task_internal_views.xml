@@ -1,0 +1,86 @@
+<odoo>
+  <record id="view_project_task_internal_kanban" model="ir.ui.view">
+    <field name="name">project.task.internal.kanban</field>
+    <field name="model">project.task.internal</field>
+    <field name="arch" type="xml">
+      <kanban>
+        <field name="name"/>
+        <field name="state"/>
+        <field name="priority"/>
+        <templates>
+          <t t-name="kanban-box">
+            <div t-attf-class="oe_kanban_card oe_kanban_color_#{record.state.raw_value}">
+              <div class="o_kanban_primary_bottom">
+                <field name="name"/>
+              </div>
+              <div>
+                <field name="assigned_to"/>
+              </div>
+              <div>
+                <field name="due_date"/>
+              </div>
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+
+  <record id="view_project_task_internal_gantt" model="ir.ui.view">
+    <field name="name">project.task.internal.gantt</field>
+    <field name="model">project.task.internal</field>
+    <field name="arch" type="xml">
+      <gantt string="Tasks Gantt" date_start="due_date" date_stop="due_date"/>
+    </field>
+  </record>
+
+  <record id="view_project_task_internal_tree" model="ir.ui.view">
+    <field name="name">project.task.internal.tree</field>
+    <field name="model">project.task.internal</field>
+    <field name="arch" type="xml">
+      <tree string="Internal Tasks">
+        <field name="name"/>
+        <field name="project_id"/>
+        <field name="assigned_to"/>
+        <field name="due_date"/>
+        <field name="state"/>
+        <field name="priority"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_project_task_internal_form" model="ir.ui.view">
+    <field name="name">project.task.internal.form</field>
+    <field name="model">project.task.internal</field>
+    <field name="arch" type="xml">
+      <form string="Internal Task">
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="project_id"/>
+            <field name="assigned_to"/>
+            <field name="due_date"/>
+            <field name="state"/>
+            <field name="priority"/>
+          </group>
+          <group>
+            <field name="description"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_project_task_internal" model="ir.actions.act_window">
+    <field name="name">Internal Tasks</field>
+    <field name="res_model">project.task.internal</field>
+    <field name="view_mode">kanban,gantt,tree,form</field>
+  </record>
+
+  <menuitem id="menu_internal_project_task"
+              name="Internal Task"
+              parent="menu_internal_project_root"
+              action="action_project_task_internal"
+              sequence="20"
+    />
+</odoo>
